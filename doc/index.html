@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hora Dinâmica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #hora {
+            font-size: 3em;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Hora Atual em São Paulo</h1>
+    <p id="hora">Carregando...</p>
+
+    <script>
+        // Encontra o elemento HTML onde a hora será exibida
+        const elementoHora = document.getElementById('hora');
+
+        // Variável para armazenar a data e hora
+        let dataHoraCompleta;
+
+        // Função para formatar e exibir a hora
+        function exibirHora() {
+            if (dataHoraCompleta) {
+                // Formata a hora para HH:mm:ss
+                const options = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    timeZone: 'America/Sao_Paulo'
+                };
+                const horaFormatada = dataHoraCompleta.toLocaleTimeString('pt-BR', options);
+                elementoHora.textContent = horaFormatada;
+            }
+        }
+
+        // Função que busca a hora da API
+        function buscarHoraInicial() {
+            fetch('https://worldtimeapi.org/api/timezone/America/Sao_Paulo')
+                .then(response => response.json())
+                .then(data => {
+                    // Armazena a data e hora completa em um objeto Date
+                    dataHoraCompleta = new Date(data.datetime);
+                    console.log('Hora inicial carregada via API.');
+
+                    // Exibe a hora inicial
+                    exibirHora();
+
+                    // Inicia o contador para avançar a hora a cada segundo
+                    setInterval(() => {
+                        // Adiciona 1 segundo à data e hora atual
+                        dataHoraCompleta.setSeconds(dataHoraCompleta.getSeconds() + 1);
+                        exibirHora();
+                    }, 1000); // 1000 milissegundos = 1 segundo
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar a hora:', error);
+                    elementoHora.textContent = 'Erro ao carregar a hora.';
+                });
+        }
+
+        // Inicia o processo buscando a hora da API
+        buscarHoraInicial();
+    </script>
+
+</body>
+
+</html>
