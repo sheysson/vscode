@@ -22,7 +22,7 @@ A página carrega e, em seguida, usa JavaScript para se conectar à API do World
 
 Você pode visualizar a página diretamente no seu navegador. Basta abrir o arquivo `index.html`.
 
-[**Clique aqui para abrir a página de demonstração**](index.html)
+[**Clique aqui para abrir a página de demonstração**](doc/index.html)
 
 **Observação:** O link acima funcionará apenas se você tiver o arquivo `index.html` na mesma pasta que este `README.md`.
 
